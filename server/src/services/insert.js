@@ -15,11 +15,12 @@ export const insertService = () => new Promise(async (resolve, reject) => {
     try {
         dataBody.forEach(async (item) => {
             let postId = v4()
-            let labelCode = generateCode(4)
+            let labelCode = generateCode(item?.header?.class?.classType)
             let attributesId = v4()
             let userId = v4()
             let imagesId = v4()
             let overviewId = v4()
+            let desc = JSON.stringify(item?.mainContent?.content)
             await db.Post.create({
                 id: postId,
                 title: item?.header?.title,
@@ -28,7 +29,7 @@ export const insertService = () => new Promise(async (resolve, reject) => {
                 address: item?.header?.address,
                 attributesId,
                 categoryCode: 'CTPT',
-                description: JSON.stringify(item?.mainContent?.content),
+                description: desc,
                 userId,
                 overviewId,
                 imagesId
@@ -40,13 +41,18 @@ export const insertService = () => new Promise(async (resolve, reject) => {
                 published: item?.header?.attributes?.published,
                 hashtag: item?.header?.attributes?.hashtag,
             })
+
             await db.Image.create({
                 id: imagesId,
                 image: JSON.stringify(item?.images)
             })
-            await db.Label.create({
-                code: labelCode,
-                value: item?.header?.class?.classType
+
+            await db.Label.findOrCreate({
+                where: { code: labelCode },
+                defaults: {
+                    code: labelCode,
+                    value: item?.header?.class?.classType
+                }
             })
             await db.Overview.create({
                 id: overviewId,
