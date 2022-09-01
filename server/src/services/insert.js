@@ -6,8 +6,11 @@ import chothuecanho from '../../data/chothuecanho.json'
 import nhachothue from '../../data/nhachothue.json'
 import chothuephongtro from '../../data/chothuephongtro.json'
 import generateCode from '../ultis/generateCode'
+import { dataPrice, dataArea } from '../ultis/data'
+import { getNumberFromString } from '../ultis/common'
 require('dotenv').config()
 const dataBody = chothuephongtro.body
+
 
 const hashPassword = password => bcrypt.hashSync(password, bcrypt.genSaltSync(12))
 
@@ -21,6 +24,8 @@ export const insertService = () => new Promise(async (resolve, reject) => {
             let imagesId = v4()
             let overviewId = v4()
             let desc = JSON.stringify(item?.mainContent?.content)
+            let currentArea = getNumberFromString(item?.header?.attributes?.acreage)
+            let currentPrice = getNumberFromString(item?.header?.attributes?.price)
             await db.Post.create({
                 id: postId,
                 title: item?.header?.title,
@@ -32,7 +37,9 @@ export const insertService = () => new Promise(async (resolve, reject) => {
                 description: desc,
                 userId,
                 overviewId,
-                imagesId
+                imagesId,
+                areaCode: dataArea.find(area => area.max > currentArea && area.min <= currentArea)?.code,
+                priceCode: dataPrice.find(area => area.max > currentPrice && area.min <= currentPrice)?.code,
             })
             await db.Attribute.create({
                 id: attributesId,
@@ -80,17 +87,24 @@ export const insertService = () => new Promise(async (resolve, reject) => {
         reject(error)
     }
 })
-// export const createUser = () => new Promise(async (resolve, reject) => {
-//     try {
-//         await db.User.create({
-//             id: userId,
-//             name: item?.contact?.content.find(i => i.name === "Liên hệ:")?.content,
-//             password: hashPassword('123456'),
-//             phone: item?.contact?.content.find(i => i.name === "Điện thoại:")?.content,
-//             zalo: item?.contact?.content.find(i => i.name === "Zalo")?.content,
-//         })
-//         resolve('OK')
-//     } catch (err) {
-//         reject(err)
-//     }
-// })
+export const createPricesAndAreas = () => new Promise((resolve, reject) => {
+    try {
+        dataPrice.forEach(async (item, index) => {
+            await db.Price.create({
+                code: item.code,
+                value: item.value,
+                order: index + 1
+            })
+        })
+        dataArea.forEach(async (item, index) => {
+            await db.Area.create({
+                code: item.code,
+                value: item.value,
+                order: index + 1
+            })
+        })
+        resolve('OK')
+    } catch (err) {
+        reject(err)
+    }
+})

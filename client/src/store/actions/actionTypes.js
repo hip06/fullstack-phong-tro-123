@@ -8,6 +8,10 @@ const actionTypes = {
 
     GET_POSTS: "GET_POSTS",
     GET_POSTS_LIMIT: "GET_POSTS_LIMIT",
+
+    GET_CATEGORIES: 'GET_CATEGORIES',
+    GET_PRICES: 'GET_PRICES',
+    GET_AREAS: 'GET_AREAS',
 }
 
 export default actionTypes

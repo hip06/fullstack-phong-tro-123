@@ -22,12 +22,14 @@ export const getPostsService = () => new Promise(async (resolve, reject) => {
         reject(error)
     }
 })
-export const getPostsLimitService = (offset) => new Promise(async (resolve, reject) => {
+export const getPostsLimitService = (page, query) => new Promise(async (resolve, reject) => {
     try {
+        let offset = (!page || +page <= 1) ? 0 : (+page - 1)
         const response = await db.Post.findAndCountAll({
+            where: query,
             raw: true,
             nest: true,
-            offset: offset * (+process.env.LIMIT) || 0,
+            offset: offset * +process.env.LIMIT,
             limit: +process.env.LIMIT,
             include: [
                 { model: db.Image, as: 'images', attributes: ['image'] },
