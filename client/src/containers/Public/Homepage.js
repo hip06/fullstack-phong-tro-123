@@ -1,19 +1,13 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { text } from '../../ultils/constant'
-import { Province, ItemSidebar } from '../../components'
+import { Province, ItemSidebar, RelatedPost } from '../../components'
 import { List, Pagination } from './index'
-import { useSelector, useDispatch } from 'react-redux'
-import * as actions from '../../store/actions'
+import { useSelector } from 'react-redux'
 
 
 const Homepage = () => {
     const { categories, prices, areas } = useSelector(state => state.app)
-    const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(actions.getPrices())
-        dispatch(actions.getAreas())
-    }, [])
     return (
         <div className='w-full flex flex-col gap-3' >
             <div>
@@ -30,6 +24,7 @@ const Homepage = () => {
                     <ItemSidebar content={categories} title='Danh sách cho thuê' />
                     <ItemSidebar isDouble={true} type='priceCode' content={prices} title='Xem theo giá' />
                     <ItemSidebar isDouble={true} type='areaCode' content={areas} title='Xem theo diện tích' />
+                    <RelatedPost />
                 </div>
             </div>
 
