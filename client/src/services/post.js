@@ -12,11 +12,24 @@ export const apiGetPosts = () => new Promise(async (resolve, reject) => {
         reject(error)
     }
 })
-export const apiGetPostsLimit = (page) => new Promise(async (resolve, reject) => {
+export const apiGetPostsLimit = (query) => new Promise(async (resolve, reject) => {
     try {
         const response = await axiosConfig({
             method: 'get',
-            url: `/api/v1/post/limit?page=${page}`,
+            url: `/api/v1/post/limit`,
+            params: query
+        })
+        resolve(response)
+
+    } catch (error) {
+        reject(error)
+    }
+})
+export const apiGetNewPosts = () => new Promise(async (resolve, reject) => {
+    try {
+        const response = await axiosConfig({
+            method: 'get',
+            url: `/api/v1/post/new-post`,
         })
         resolve(response)
 
