@@ -21,7 +21,7 @@ const icons = {
     RiHeartLine,
     BsBookmarkStarFill,
     GrLinkNext,
-    GrLinkPrevious
+    GrLinkPrevious,
 }
 
 export default icons
