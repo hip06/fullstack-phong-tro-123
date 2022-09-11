@@ -24,7 +24,6 @@ export const getPostsService = () => new Promise(async (resolve, reject) => {
     }
 })
 export const getPostsLimitService = (page, query, { priceNumber, areaNumber }) => new Promise(async (resolve, reject) => {
-    console.log({ priceNumber, areaNumber })
     try {
         let offset = (!page || +page <= 1) ? 0 : (+page - 1)
         const queries = { ...query }

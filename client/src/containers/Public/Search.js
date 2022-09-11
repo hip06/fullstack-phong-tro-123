@@ -19,7 +19,7 @@ const Search = () => {
     const [defaultText, setDefaultText] = useState('')
 
     useEffect(() => {
-        if (!location.pathname.includes(path.SEARCH)) {
+        if (!location?.pathname.includes(path.SEARCH)) {
             setArrMinMax({})
             setQueries({})
         }

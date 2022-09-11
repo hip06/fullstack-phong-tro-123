@@ -9,7 +9,6 @@ const { GrStar, RiHeartFill, RiHeartLine, BsBookmarkStarFill } = icons
 
 const Item = ({ images, user, title, star, description, attributes, address, id }) => {
     const [isHoverHeart, setIsHoverHeart] = useState(false)
-    const navigate = useNavigate()
 
     const handleStar = (star) => {
         let stars = []
@@ -25,7 +24,7 @@ const Item = ({ images, user, title, star, description, attributes, address, id 
             >
                 {images.length > 0 && images.filter((i, index) => indexs.some(i => i === index))?.map((i, index) => {
                     return (
-                        <img key={index} src={i} alt="preview" className='w-[140px] h-[120px] object-cover' />
+                        <img key={index} src={i} alt="preview" className='w-[47%] h-[120px] object-cover' />
                     )
                 })}
                 <span className='bg-overlay-70 text-white px-2 rounded-md absolute left-1 bottom-4'>{`${images.length} ảnh`}</span>
