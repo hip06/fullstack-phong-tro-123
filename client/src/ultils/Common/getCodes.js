@@ -3,7 +3,7 @@ import { getNumbersArea, getNumbersPrice } from "./getNumbers"
 
 export const getCodePrice = (totals) => {
     let arr = []
-    return totals.map(item => {
+    return totals?.map(item => {
         let arrMaxMin = getNumbersPrice(item.value)
         if (arrMaxMin.length === 1) arr.push(arrMaxMin[0])
         let sortedArr = arr.sort()
@@ -16,7 +16,7 @@ export const getCodePrice = (totals) => {
 }
 export const getCodeArea = (totals) => {
     let arr = []
-    return totals.map(item => {
+    return totals?.map(item => {
         let arrMaxMin = getNumbersArea(item.value)
         if (arrMaxMin.length === 1) arr.push(arrMaxMin[0])
         let sortedArr = arr.sort()

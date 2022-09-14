@@ -42,7 +42,7 @@ export const apiUploadImages = (images) => new Promise(async (resolve, reject) =
     try {
         const response = await axios({
             method: 'post',
-            url: `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`,
+            url: `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload/`,
             data: images,
         })
         resolve(response)

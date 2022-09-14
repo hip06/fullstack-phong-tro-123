@@ -6,8 +6,8 @@ const Address = ({ setPayload }) => {
 
     const [provinces, setProvinces] = useState([])
     const [districts, setDistricts] = useState([])
-    const [province, setProvince] = useState()
-    const [district, setDistrict] = useState()
+    const [province, setProvince] = useState('')
+    const [district, setDistrict] = useState('')
     const [reset, setReset] = useState(false)
 
     useEffect(() => {
