@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Overview, Address } from '../../components'
 import { BsCameraFill } from 'react-icons/bs'
+import { apiUploadImages } from '../../services'
 
 const CreatePost = () => {
 
@@ -17,7 +18,20 @@ const CreatePost = () => {
         target: '',
         province: ''
     })
-    console.log(payload);
+    // console.log(payload);
+    const handleFiles = async (e) => {
+        e.stopPropagation()
+        let files = e.target.files
+        let images = new FormData()
+        for (let i of files) {
+            console.log(1);
+            images.append('file', i)
+            images.append('upload_preset', process.env.REACT_APP_UPLOAD_ASSETS_NAME)
+
+            let response = await apiUploadImages(images)
+            console.log(response);
+        }
+    }
     return (
         <div className='px-6'>
             <h1 className='text-3xl font-medium py-4 border-b border-gray-200'>Đăng tin mới</h1>
@@ -33,7 +47,7 @@ const CreatePost = () => {
                                 <BsCameraFill color='blue' size={50} />
                                 Thêm ảnh
                             </label>
-                            <input hidden type="file" id='file' />
+                            <input onChange={handleFiles} value='' hidden type="file" id='file' multiple />
                         </div>
                     </div>
                     <div className='h-[500px]'>

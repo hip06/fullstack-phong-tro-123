@@ -9,7 +9,7 @@ const InputReadOnly = ({ label, value }) => {
                 id='exactly-address'
                 readOnly
                 className='border border-gray-200 outline-none rounded-md bg-gray-100 p-2 w-full'
-                value={value}
+                value={value || ''}
             />
         </div>
     )
